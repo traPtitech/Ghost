@@ -130,5 +130,8 @@
     "lint-staged": "13.2.3",
     "nx": "16.5.2",
     "ts-node": "10.9.1"
+  },
+  "overrides": {
+    "cron-validate": "1.4.5"
   }
 }
