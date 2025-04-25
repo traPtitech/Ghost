@@ -262,7 +262,8 @@
     "@tryghost/errors": "1.2.24",
     "@tryghost/logging": "2.4.4",
     "moment": "2.24.0",
-    "moment-timezone": "0.5.23"
+    "moment-timezone": "0.5.23",
+    "**/bree/cron-validate": "1.4.5"
   },
   "nx": {
     "targets": {

@@ -11,7 +11,7 @@ RUN (cd ghost/bookshelf-filter && git filter-repo -f --subdirectory-filter packa
   (cd ghost/kg-default-cards && git filter-repo -f --subdirectory-filter packages/kg-default-cards) && \
   (cd ghost/kg-markdown-html-renderer && git filter-repo -f --subdirectory-filter packages/kg-markdown-html-renderer)
 
-RUN yarn install --silent --frozen-lockfile && yarn cache clean
+RUN yarn install --silent && yarn cache clean
 RUN yarn archive
 RUN cp ./ghost/core/ghost-${GHOST_VERSION}.tgz ./ghost.tgz && \
   tar -xzf ./ghost.tgz && \
