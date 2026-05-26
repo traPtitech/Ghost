@@ -17,7 +17,8 @@ RUN cp ./ghost/core/ghost-${GHOST_VERSION}.tgz ./ghost.tgz && \
   tar -xzf ./ghost.tgz && \
   rm ./ghost.tgz && \
   mkdir -p /srv/ghost && \
-  mv ./package/* /srv/ghost
+  mv ./package/* /srv/ghost && \
+  cp yarn.lock /srv/ghost/yarn.lock
 
 COPY ./ghost/core/content/themes/ghost-theme-2020 /srv/ghost/content/themes/ghost-theme-2020
 
