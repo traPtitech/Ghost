@@ -15,19 +15,19 @@ services:
     tty: true
     restart: always
     depends_on:
-      - maria
+      - mysql
     command: >
-      bash -c "dockerize -wait tcp://maria:3306 &&
+      bash -c "dockerize -wait tcp://mysql:3306 &&
       node /srv/ghost/index.js"
-  maria:
-    image: mariadb:10.11.4
-    container_name: maria
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
     volumes:
-      - maria-volume:/var/lib/maria
+      - mysql-volume:/var/lib/mysql
       - ./conf.d:/etc/mysql/conf.d:ro
     restart: always
     environment:
-      MYSQL_ROOT_HOST: maria
+      MYSQL_ROOT_HOST: mysql
       MYSQL_ROOT_PASSWORD: ghost
       MYSQL_USER: ghost
       MYSQL_PASSWORD: pass
@@ -36,4 +36,4 @@ services:
       - 3306
 
 volumes:
-  maria-volume:
+  mysql-volume:
