@@ -32,6 +32,6 @@ RUN apt-get update && apt-get install -y git
 ENV NODE_ENV production
 COPY --from=builder /srv/ghost /srv/ghost
 WORKDIR /srv/ghost
-RUN yarn install --frozen-lockfile && yarn cache clean
+RUN yarn install && yarn cache clean
 EXPOSE 2368
 CMD ["node", "./index.js"]
