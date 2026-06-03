@@ -20,7 +20,7 @@ services:
       bash -c "dockerize -wait tcp://mysql:3306 &&
       node /srv/ghost/index.js"
   mysql:
-    image: mysql:8.0
+    image: mysql:8.0@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
     container_name: mysql
     volumes:
       - mysql-volume:/var/lib/mysql

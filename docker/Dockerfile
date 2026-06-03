@@ -1,4 +1,4 @@
-FROM node:18.20.2-bookworm-slim AS builder
+FROM node:18.20.2-bookworm-slim@sha256:2697eb70c760c3720ad9811871d5ab19c4ad2f2e0a3735785e531927ab99bd39 AS builder
 ENV GHOST_VERSION 5.54.4
 ENV NODE_ENV development
 
@@ -26,7 +26,7 @@ COPY ./ghost/core/content/themes/ghost-theme-2020 /srv/ghost/content/themes/ghos
 RUN mkdir -p /srv/ghost/content/adapters/storage && \ 
   cp -r ./node_modules/ghost-storage-adapter-openstack /srv/ghost/content/adapters/storage/openstack
 
-FROM node:18.20.2-bookworm-slim
+FROM node:18.20.2-bookworm-slim@sha256:2697eb70c760c3720ad9811871d5ab19c4ad2f2e0a3735785e531927ab99bd39
 RUN apt-get update && apt-get install -y git
 
 ENV NODE_ENV production
