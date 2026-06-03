@@ -6,20 +6,20 @@ runs:
   steps:
     - name: Check dependency cache
       id: dep-cache
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@6f8efc29b200d32929f49075959781ed54ec270c # v3.5.0
       with:
         path: ${{ env.CACHED_DEPENDENCY_PATHS }}
         key: ${{ env.DEPENDENCY_CACHE_KEY }}
 
     - name: Check build cache
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@6f8efc29b200d32929f49075959781ed54ec270c # v3.5.0
       id: build-cache
       with:
         path: ${{ env.CACHED_BUILD_PATHS }}
         key: ${{ github.sha }}
 
     - name: Check if caches are restored
-      uses: actions/github-script@v6
+      uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
       if: steps.dep-cache.outputs.cache-hit != 'true' || steps.build-cache.outputs.cache-hit != 'true'
       with:
         script: core.setFailed('Dependency or build cache could not be restored - please re-run ALL jobs.')
