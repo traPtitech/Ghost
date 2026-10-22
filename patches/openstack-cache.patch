@@ -1,0 +1,13 @@
+--- a/cache.js
++++ b/cache.js
+@@ -4,2 +4,3 @@
+ const concatStream = require('concat-stream')
++const { pipeline } = require('stream')
+ const glob = require('fast-glob')
+@@ -143,3 +144,5 @@
+-      fileStream.pipe(transformer)
++      pipeline(fileStream, transformer, err => {
++        if (err) reject(err)
++      })
+     })
+   }
