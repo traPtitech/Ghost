@@ -22,6 +22,10 @@ RUN cp ./ghost/core/ghost-${GHOST_VERSION}.tgz ./ghost.tgz && \
 
 COPY ./ghost/core/content/themes/ghost-theme-2020 /srv/ghost/content/themes/ghost-theme-2020
 
+# Patch the archived adapter so storage failures cannot terminate Ghost.
+RUN git apply --directory=node_modules/ghost-storage-adapter-openstack patches/openstack-cache.patch && \
+  node patches/test-openstack-cache.cjs ./node_modules/ghost-storage-adapter-openstack
+
 # s3 adaptorを移動
 RUN mkdir -p /srv/ghost/content/adapters/storage && \ 
   cp -r ./node_modules/ghost-storage-adapter-openstack /srv/ghost/content/adapters/storage/openstack

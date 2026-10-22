@@ -1,0 +1,27 @@
+name: Test OpenStack cache
+on:
+  pull_request:
+    paths:
+      - docker/**
+      - patches/**
+      - .github/workflows/openstack-cache.yaml
+  push:
+    branches: [traP]
+    paths:
+      - docker/**
+      - patches/**
+      - .github/workflows/openstack-cache.yaml
+permissions:
+  contents: read
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Test patched adapter with the production Node and sharp versions
+        run: |
+          docker run --rm --network none \
+            --mount "type=bind,source=$GITHUB_WORKSPACE/patches,target=/patches,readonly" \
+            ghcr.io/traptitech/ghost:latest@sha256:11bbe8f4e28725b696b6190bc2f6f33df512e8ed7e08130c2d910036f8fe04d6 \
+            sh -c 'cd /srv/ghost/content/adapters/storage/openstack && git apply /patches/openstack-cache.patch && node /patches/test-openstack-cache.cjs /srv/ghost/content/adapters/storage/openstack'
