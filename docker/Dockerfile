@@ -12,9 +12,6 @@ RUN (cd ghost/bookshelf-filter && git filter-repo -f --subdirectory-filter packa
   (cd ghost/kg-markdown-html-renderer && git filter-repo -f --subdirectory-filter packages/kg-markdown-html-renderer)
 
 RUN yarn install --silent --frozen-lockfile && yarn cache clean
-# Patch the archived adapter so storage failures cannot terminate Ghost.
-RUN git apply --directory=node_modules/ghost-storage-adapter-openstack patches/openstack-cache.patch && \
-  node patches/test-openstack-cache.cjs ./node_modules/ghost-storage-adapter-openstack
 RUN yarn archive
 RUN cp ./ghost/core/ghost-${GHOST_VERSION}.tgz ./ghost.tgz && \
   tar -xzf ./ghost.tgz && \
@@ -24,6 +21,10 @@ RUN cp ./ghost/core/ghost-${GHOST_VERSION}.tgz ./ghost.tgz && \
   cp yarn.lock /srv/ghost/yarn.lock
 
 COPY ./ghost/core/content/themes/ghost-theme-2020 /srv/ghost/content/themes/ghost-theme-2020
+
+# Patch the archived adapter so storage failures cannot terminate Ghost.
+RUN git apply --directory=node_modules/ghost-storage-adapter-openstack patches/openstack-cache.patch && \
+  node patches/test-openstack-cache.cjs ./node_modules/ghost-storage-adapter-openstack
 
 # s3 adaptorを移動
 RUN mkdir -p /srv/ghost/content/adapters/storage && \ 
